@@ -28,11 +28,13 @@ Route::put('/product/{id}', [ProductController::class, 'update']);
 Route::delete('/product/{id}', [ProductController::class, 'destroy']);
 
 // Category
-Route::get('/category/index', [CategoryController::class, 'index']);
-Route::post('/category/create', [CategoryController::class, 'store']);
-Route::get('/category/{id}', [CategoryController::class, 'show']);
-Route::put('/category/update/{id}', [CategoryController::class, 'update']);
-Route::delete('/category/delete/{id}', [CategoryController::class, 'destroy']);
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/category/index', 'index');
+    Route::post('/category/create',  'store');
+    Route::get('/category/{id}', 'show');
+    Route::put('/category/update/{id}', 'update');
+    Route::delete('/category/delete/{id}', 'destroy');
+});
 
 // JWT Auth
 Route::group([
@@ -45,5 +47,5 @@ Route::group([
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
+    // Route::post('me', [AuthController::class, 'me']);
 });
